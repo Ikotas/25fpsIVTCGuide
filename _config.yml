@@ -1,13 +1,12 @@
 title: 29.97fps→25fps逆テレシネ(IVTC)ガイド
 # logo: /assets/img/logo.png
-description: 29.97fps→25fpsの逆テレシネ(IVTC)ガイド
+description: >- 29.97fps→25fpsの逆テレシネ(IVTC)ガイド
 show_downloads: false
 google_analytics:
 theme: jekyll-theme-slate
 timezone: Asia/Tokyo # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 date_format: "%Y-%m-%d"
 
-# Plugins (previously gems:)
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
@@ -15,11 +14,11 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-include-cache
+
 author:
   name   : "Ikotas"
 
 defaults:
-  # _posts
   - scope:
       path: ""
       type: posts
@@ -35,7 +34,6 @@ defaults:
       share: true
       related: true
       permalink: /:categories/:year/:month/:day/:title.html
-  # _pages
   - scope:
       path: "_pages"
       type: pages
