@@ -1,6 +1,6 @@
 ## 29.97fps→25fps逆テレシネ(IVTC)ガイド
 
-A guide to IVTC from 29.97fps to 25fps
+A guide for IVTC from 29.97fps to 25fps
 
 ---
 
@@ -12,8 +12,8 @@ A guide to IVTC from 29.97fps to 25fps
   https://ikotas.github.io/25fpsIVTCGuide/
 
 <br>
-This is a guide to IVTC from 29.97fps to 25fps.<br>
-The guide is only available in Japanese, but Chrome's translation is excellent these days, so I hope it will not be a problem to understand the meaning.<br>
+This is a guide for IVTC from 29.97fps to 25fps.<br>
+This guide is only available in Japanese, but Chrome's translation is excellent these days, so I hope it will not be a problem to understand the meaning.<br>
 If you have any questions about the meaning, please contact me via Issue.<br>
 I hope it will be useful.
 
