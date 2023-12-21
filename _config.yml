@@ -1,6 +1,6 @@
 title: 29.97fps→25fps逆テレシネ(IVTC)ガイド
 # logo: /assets/img/logo.png
-# description: >- # this means to ignore newlines until "baseurl:"
+description: >- # this means to ignore newlines until "baseurl:"
   29.97fps→25fpsの逆テレシネ(IVTC)ガイド
 show_downloads: false
 google_analytics:
