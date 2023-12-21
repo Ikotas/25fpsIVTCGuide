@@ -1,88 +1,88 @@
-# 29.97fps��25fps�̋t�e���V�l(IVTC)�K�C�h
+# 29.97fps→25fpsの逆テレシネ(IVTC)ガイド
 
 ---
-### �ڎ�
-1. ���߂�
-2. 25fps�e���V�l�\�[�X�̎������
-3. ���{�̑O�ɁiTDecimate���g�p���闝�R�E�ړI�j
-4. �t�e���V�l�̎��{
-5. Cycle���̏d���t���[������33�ł͂Ȃ��ꍇ�̏������@
-6. �Ō��(�ӎ�)
+### 目次
+1. 初めに
+2. 25fpsテレシネソースの周期解説
+3. 実施の前に（TDecimateを使用する理由・目的）
+4. 逆テレシネの実施
+5. Cycle内の重複フレーム数が33ではない場合の処理方法
+6. 最後に(謝辞)
 
 ---
 
 
-## 1. ���߂�
+## 1. 初めに
 
-25fps����29.97fps�փe���V�l���ꂽ�A�A�W�A���Y�⃈�[���b�p���Y�A�ɂ܂�ɃA�����J�Y�̃\�[�X���������ԑg������܂��B  
-�����̃\�[�X���A����25fps�֋t�e���V�l���悤�ƁA�C���^�[�l�b�g��Ō��������܂������A�T�����������̂��A������T���Ă��L�v�ȏ��������邱�Ƃ��ł��܂���ł����B  
-��񂪂Ȃ��̂ł���Ύ����ŐF�X�Ǝ����Ă݂邵���Ȃ����ƁA�����ɓn�莎�s������J��Ԃ��Ă��܂������A���m�ɋt�e���V�l���s�����Ƃ��ł�����@�������邱�Ƃ��ł��܂����B  
-���l�ɏ�񂪌������Ȃ����̂��߂ɁA�{�K�C�h���쐬���A���J���܂��B
+25fpsから29.97fpsへテレシネされた、アジア圏産やヨーロッパ圏産、極まれにアメリカ産のソースを放送する番組があります。  
+これらのソースを、元の25fpsへ逆テレシネしようと、インターネット上で検索をしましたが、探し方が悪いのか、いくら探しても有益な情報を見つけることができませんでした。  
+情報がないのであれば自分で色々と試してみるしかないかと、長期に渡り試行錯誤を繰り返していましたが、正確に逆テレシネを行うことができる方法を見つけることができました。  
+同様に情報が見つけられない方のために、本ガイドを作成し、公開します。
 
-�Ȃ��A���̓v���O���}�[�ł͂Ȃ����߁A�C�̗������c�[���͗p�ӂł��Ă��܂���B  
-�}�N�����ݒ肵�Ă��Ȃ��X�v���b�h�V�[�g�ƃe�L�X�g�G�f�B�^�[�ŁA�R�s�y�ƕҏW���J��Ԃ����S�Ȏ��ƂƂȂ�܂��B  
-�����Ƀe���V�l�f�ނ���������t�e���V�l���Ȃ��Ɖ䖝�ł��Ȃ��Ƃ����A���͂��i���̂��̂��ړI�ɂȂ��Ă��܂��Ă�����Ɍ������A�ƂĂ���ԉɂ̊|������@�ł��B  
-�t�e���V�l�Ɏ��Ԃ�J�͂��|�������Ȃ����́A29.97fps�̂܂܂Ƃ��邩�A59.94fps���ɂ�������A�ȒP�Ŏ�ԓ��炸�ł��B
+なお、私はプログラマーではないため、気の利いたツールは用意できていません。  
+マクロも設定していないスプレッドシートとテキストエディターで、コピペと編集を繰り返す完全な手作業となります。  
+そこにテレシネ素材があったら逆テレシネしないと我慢できないという、もはや手段そのものが目的になってしまっている方に向けた、とても手間暇の掛かる方法です。  
+逆テレシネに時間や労力を掛けたくない方は、29.97fpsのままとするか、59.94fps化にする方が、簡単で手間入らずです。
 
-�܂��A�����܂ł������T���Ă��Ȃ������ŁA���ۂɂ́A�����ƊȒP�ɓ������Ƃ������ł�����@��v���O�C����X�N���v�g���A���ɐ��̒��ɑ��݂��邩������܂���B  
-���������m�ł�����A�����Ă��������܂��ƍK���ł��B
+また、あくまでも私が探せていないだけで、実際には、もっと簡単に同じことが実現できる方法やプラグインやスクリプトが、既に世の中に存在するかもしれません。  
+もしご存知でしたら、教えていただけますと幸いです。
 
 ---
-## 2. 25fps�e���V�l�\�[�X�̎������
+## 2. 25fpsテレシネソースの周期解説
 
-25fps��29,97fps�փe���V�l�����\�[�X�́A���̊Ԋu�Ńt���[�����d�����Ă��܂��B  
-���̊Ԋu���ώ@���Ă���ƁA���̎����ŌJ��Ԃ���Ă��邱�ƂɋC���t���܂��B  
-���̎������ώ@���Ă���ƁA�X�Ɉ��̎����ŁA�������̂�����Ă������ƂɋC���t���܂��B  
+25fpsを29,97fpsへテレシネしたソースは、一定の間隔でフレームが重複しています。  
+この間隔を観察していると、一定の周期で繰り返されていることに気が付きます。  
+この周期も観察していると、更に一定の周期で、周期自体がずれていくことに気が付きます。  
 
-#### ���ώ@��蓱���o���������̓���
-* �����́A33�̏d���t���[�������A������199�t���[���̏W�܂�ō\������܂��B  
-���̘A������199�t���[���� **Cycle** �Ƃ��܂��B
-* Cycle���̏d�����Ȃ��A���t���[�����́A�ȉ��̒ʂ�ł��B
-  * �擪�t���[������ŏ��̏d���t���[���܂Łc 0�`6�t���[��
-  * �ŏ��̏d���t���[������Ō�̏d���t���[���܂ł̊ԁc 5�܂���6�t���[��
-  * �Ō�̏d���t���[������ŏI�t���[���܂Łc 0�`6�t���[��  
+#### ◇観察より導き出した周期の特徴
+* 周期は、33個の重複フレームを持つ連続する199フレームの集まりで構成されます。  
+この連続する199フレームを **Cycle** とします。
+* Cycle内の重複がない連続フレーム数は、以下の通りです。
+  * 先頭フレームから最初の重複フレームまで… 0～6フレーム
+  * 最初の重複フレームから最後の重複フレームまでの間… 5または6フレーム
+  * 最後の重複フレームから最終フレームまで… 0～6フレーム  
 
-  ���̏d�����Ȃ��A���t���[�����A"**ND*n***" (*Non Duplicate n frame(s)*�A*n*=1-6) �Ƃ��܂��B  
-�܂��A�d���t���[�����̂��A"**Dup**" (*Duplicate frame(s)*) �Ƃ��܂��B
-* Cycle����ND1-6��Dup�̑g�ݍ��킹�p�^�[����200�ʂ肠��A1�̑g�ݍ��킹���K��񐔌J��Ԃ����̂��A���̑g�ݍ��킹�Ɉڍs���܂��B  
-���̋K��񐔌J��Ԃ��g�ݍ��킹�p�^�[���� **Cycle�O���[�v** �Ƃ��܂��B
-* Cycle�O���[�v�͌��܂��������ɏ]����200�ʂ�ڍs����ƁA�܂�1����J��Ԃ��܂��B
+  この重複しない連続フレームを、"**ND*n***" (*Non Duplicate n frame(s)*、*n*=1-6) とします。  
+また、重複フレーム自体を、"**Dup**" (*Duplicate frame(s)*) とします。
+* Cycle内のND1-6とDupの組み合わせパターンは200通りあり、1つの組み合わせを規定回数繰り返したのち、次の組み合わせに移行します。  
+この規定回数繰り返す組み合わせパターンを **Cycleグループ** とします。
+* Cycleグループは決まった順序に従って200通り移行すると、また1から繰り返します。
 
-#### �\1. Cycle�̑g�ݍ��킹�p�^�[���ƍ\��
-|No.|�擪|����(���s��)|����|�J�Ԑ�|���l|
+#### 表1. Cycleの組み合わせパターンと構造
+|No.|先頭|中間(順不同)|末尾|繰返数|備考|
 |-:|-|-|-|:-:|-|
 |1|1ND6|32ND5 / 32Dup|1Dup|6||
-|2|1ND5|31ND5 / 32Dup / 1ND6|1Dup|6*32=192|�J��6��*ND6�ړ�32��|
-|3|1ND5|32ND5 / 33Dup|1ND1|7|�擪ND5+����ND1=ND6|
-|4|1ND4|31ND5 / 33Dup / 1ND6|1ND1|6*32=192|�J��6��*ND6�ړ�32��|
-|5|1ND4|32ND5 / 33Dup|1ND2|7|�擪ND4+����ND2=ND6|
-|6|1ND3|31ND5 / 33Dup / 1ND6|1ND2|6*32=192|�J��6��*ND6�ړ�32��|
-|7|1ND3|32ND5 / 33Dup|1ND3|7|�擪ND3+����ND3=ND6|
-|8|1ND2|31ND5 / 33Dup / 1ND6|1ND3|6*32=192|�J��6��*ND6�ړ�32��|
-|9|1ND2|32ND5 / 33Dup|1ND4|7|�擪ND2+����ND4=ND6|
-|10|1ND1|31ND5 / 33Dup / 1ND6|1ND4|6*32=192|�J��6��*ND6�ړ�32��|
-|11|1ND1|32ND5 / 33Dup|1ND5|7|�擪ND1+����ND5=ND6|
-|12|1Dup|31ND5 / 32Dup / 1ND6|1ND5|6*32=192|�J��6��*ND6�ړ�32��|
+|2|1ND5|31ND5 / 32Dup / 1ND6|1Dup|6*32=192|繰返6回*ND6移動32回|
+|3|1ND5|32ND5 / 33Dup|1ND1|7|先頭ND5+末尾ND1=ND6|
+|4|1ND4|31ND5 / 33Dup / 1ND6|1ND1|6*32=192|繰返6回*ND6移動32回|
+|5|1ND4|32ND5 / 33Dup|1ND2|7|先頭ND4+末尾ND2=ND6|
+|6|1ND3|31ND5 / 33Dup / 1ND6|1ND2|6*32=192|繰返6回*ND6移動32回|
+|7|1ND3|32ND5 / 33Dup|1ND3|7|先頭ND3+末尾ND3=ND6|
+|8|1ND2|31ND5 / 33Dup / 1ND6|1ND3|6*32=192|繰返6回*ND6移動32回|
+|9|1ND2|32ND5 / 33Dup|1ND4|7|先頭ND2+末尾ND4=ND6|
+|10|1ND1|31ND5 / 33Dup / 1ND6|1ND4|6*32=192|繰返6回*ND6移動32回|
+|11|1ND1|32ND5 / 33Dup|1ND5|7|先頭ND1+末尾ND5=ND6|
+|12|1Dup|31ND5 / 32Dup / 1ND6|1ND5|6*32=192|繰返6回*ND6移動32回|
 |13|1Dup|32ND5 / 32Dup|1ND6|6||
 |14|1Dup|33ND5 / 32Dup|1Dup|1|34Dup|
 
-* �Ȍ��ɕ\�����߂ɁA200�ʂ�̑g�ݍ��킹�p�^�[���̓��ANo.2, 4, 6, 8, 10, 12�̒��ԕ����̊e32�ʂ�̑g�ݍ��킹�p�^�[�����ȗ����Ă��܂��B
-* No.1-14�Ŏ����S�̂�\���Ă���ANo.14�̎��́A�܂�No1����n�܂�܂��B
-* No.7��܂�Ԃ����ԓ_�Ƃ��āANo.1����No.13�܂őΏ̂ɂȂ��Ă��܂��B
-* No.14�́ACycle�����ɏd���t���[����1�]�v�ɑ��݂��܂��B  
-�e���V�l�̒��K�����킹�邽�߂̒����pCycle���ƍl�����܂��B  
-* �S�̂�ʂ��āA6Cycle�܂���7Cycle���ɁAND6�͎���ND5�Ɠ���ւ���Č���ֈړ����Ă����A���񂵂܂��B
-  * ND6��Cycle���̈ړ��́A�ŏ��̏d���t���[������n�܂�A�Ō�̏d���t���[���܂ŁA6Cycle����32��J��Ԃ��܂��B
-    * �Ώ�No.2, 4, 6, 8, 10, 12
-  * ND6���Ō�̏d���t���[���ɓ��B��������Cycle�O���[�v�ł́AND6��Cycle�̖������玟��Cycle�̐擪�Ɋ|���ĕ�����Čׂ邱�ƂɂȂ�܂��B  
-�܂��A���̏�Ԃ�Cycle�́A7��J��Ԃ��܂��B(7Cycle)
-    * �Ώ�No.3, 5, 7, 9, 11
-  * ND6��Cycle����������邽�тɁA�ŏ��̏d���t���[���̈ʒu��1�t���[�����O���ɂ���Ă����A�S�̂�6������ƁA���̌`�ɖ߂�܂��B
-    * 1���ځcNo.1-3�A2���ځcNo.4,5�A3���ځcNo.6,7�A  
-4���ځcNo.8,9�A5���ځcNo.10,11�A6���ځcNo.12-14
+* 簡潔に表すために、200通りの組み合わせパターンの内、No.2, 4, 6, 8, 10, 12の中間部分の各32通りの組み合わせパターンを省略しています。
+* No.1-14で周期全体を表しており、No.14の次は、またNo1から始まります。
+* No.7を折り返し中間点として、No.1からNo.13まで対称になっています。
+* No.14は、Cycle末尾に重複フレームが1つ余計に存在します。  
+テレシネの帳尻を合わせるための調整用Cycleだと考えられます。  
+* 全体を通して、6Cycleまたは7Cycle毎に、ND6は次のND5と入れ替わって後方へ移動していき、周回します。
+  * ND6のCycle内の移動は、最初の重複フレームから始まり、最後の重複フレームまで、6Cycle毎に32回繰り返します。
+    * 対象No.2, 4, 6, 8, 10, 12
+  * ND6が最後の重複フレームに到達した次のCycleグループでは、ND6はCycleの末尾から次のCycleの先頭に掛けて分かれて跨ることになります。  
+また、その状態のCycleは、7回繰り返します。(7Cycle)
+    * 対象No.3, 5, 7, 9, 11
+  * ND6がCycle内を一周するたびに、最初の重複フレームの位置が1フレームずつ前方にずれていき、全体で6周すると、元の形に戻ります。
+    * 1周目…No.1-3、2周目…No.4,5、3周目…No.6,7、  
+4周目…No.8,9、5周目…No.10,11、6周目…No.12-14
 
-#### �\2. Cycle�̃t���[�����Əd���t���[��(Dup)��
-|No.|�\���v�f|�t���[����|Dup��|�J�Ԑ�|���v�t���[����|���vDup��|
+#### 表2. Cycleのフレーム数と重複フレーム(Dup)数
+|No.|構成要素|フレーム数|Dup数|繰返数|合計フレーム数|合計Dup数|
 |-:|-|-:|-:|-:|-:|-:|
 |1|1ND6+32ND5+33Dup|199|33|6|1,194|198|
 |2|32ND5+33Dup+1ND6|199|33|192|38,208|6,336|
@@ -98,329 +98,329 @@
 |12|32ND5+33Dup+1ND6|199|33|192|38,208|6,336|
 |13|32ND5+33Dup+1ND6|199|33|6|1,194|198|
 |14|33ND5+34Dup|199|34|1|199|34|
-|-|���v|-|-|1,200|238,800|39,601|
+|-|合計|-|-|1,200|238,800|39,601|
 
 <br>
-�����́A�ŏ�����Ō�܂ŕ���邱�ƂȂ��A�����悤�ɂ��ꂢ�ɑ����Ă���\�[�X������΁ACycle�̓r������ˑR�ω�����\�[�X������܂��B
+周期は、最初から最後まで崩れることなく、流れるようにきれいに揃っているソースもあれば、Cycleの途中から突然変化するソースもあります。
 
-#### ���C���M�����[�Ȏ����ω������������ȉӏ�
-���S�ăe���V�l��̃J�b�g�ҏW�������ƍl�����܂��B
-* �I�[�v�j���O��G���f�B���O�Ɩ{�҂Ƃ̌q������
-* �e���r�R�}�[�V�����̂��߂̕��f����
-* �{�Ғ��̃J�b�g�ҏW�̌q������
+#### ◇イレギュラーな周期変化が発生する主な箇所
+※全てテレシネ後のカット編集が原因と考えられます。
+* オープニングやエンディングと本編との繋ぎ部分
+* テレビコマーシャルのための分断部分
+* 本編中のカット編集の繋ぎ部分
 
-�܂��A�S�Ă�25fps�̃e���V�l�\�[�X���A���̎����ɓ��Ă͂܂�Ηǂ��̂ł����A���ɂ͈قȂ����������(�܂��͎����������Ȃ�)�\�[�X������܂��B
+また、全ての25fpsのテレシネソースが、この周期に当てはまれば良いのですが、中には異なる周期を持つ(または周期を持たない)ソースもあります。
 
-#### ���قȂ����������������Ȃ��\�[�X
-* 23.976fps�e���V�l��29.97fps���́A�����قȂ�t���[�����[�g�̃\�[�X�ƌ�������Ă���\�[�X
-* ���x���ҏW���J��Ԃ��ꂽ���Ƃɂ����������Ă���\�[�X
-* �e���V�l���̎��{��@���قȂ�\�[�X
-* ���̑��s���ȗ��R�Ŏ������قȂ�\�[�X
+#### ◇異なる周期や周期を持たないソース
+* 23.976fpsテレシネや29.97fps等の、元が異なるフレームレートのソースと結合されているソース
+* 何度も編集を繰り返されたことにより周期が壊れているソース
+* テレシネ化の実施手法が異なるソース
+* その他不明な理由で周期が異なるソース
 
-�����̃\�[�X�́A�{�K�C�h�̕��@�ŋt�e���V�l���邱�Ƃ�������߁A29.97fps�̂܂܂Ƃ��邩�A59.94fps�����������܂��傤�B
-
----
-## 3. ���{�̑O�ɁiTDecimate���g�p���闝�R�E�ړI�j
-
-2�͂̎����ɏ]���ďd���t���[�����Ԉ������Ƃ��ł���΁A����25fps�𕜌�(�t�e���V�l/Inverse Telecine(IVTC))���邱�Ƃ��ł��܂��B  
-�d���t���[�����Ԉ������߂ɁAAviSynth�̃v���O�C��**TIVTC**�Ɋ܂܂��**TDecimate**���g�p���܂��B
-
-TDecimate�́A�p�����[�^�[`Cycle`�Ɏw�肵���t���[�����͈͓̔�����A�p�����[�^�[`CycleR`�Ɏw�肵���t���[�������Ԉ����܂��B  
-* 2�͂�Cycle��TDecimate�ɓ��Ă͂߂�ƁA�ȉ��̐ݒ�ɂȂ�܂��B  
-�����̂܂܁A29.97fps��25fps�֊Ԉ����ݒ�ƂȂ�܂��B
-
-  * 29.97fps��25fps�F`CycleR=33,Cycle=199`
-
-* �Q�l�܂łɁA29,97fps��23.976fps�֊Ԉ����ꍇ�̐ݒ�ł��B
-
-  * 29.97fps��23.976fps�F`CycleR=1,Cycle=5`
-
-�Ԉ������Ώۂ̃t���[��33�́A��{�I�ɁA���O�̃t���[���Ƃ̍������ł��������Ɣ��肳�ꂽ���ԂɑI�΂�܂��B  
-* `mode`��`dupThresh`��`sdlim`���̃p�����[�^�[�̎w��ɂ��A�I�������Ώۂ�������x�R���g���[���ł��܂����A���̑Ώۂ̒��ł́A��ɍ������ł��������Ɣ��肳�ꂽ���ԂɑI�΂�܂��B
-
-���̂��߁A�P�F(��ɔ��⍕)�A�قړ������Ȃ�(�܂��͊��S�ɂȂ�)�Ƃ������V�[��������ƁA�����ɏ]���đ��݂���d���t���[�������������������Ɣ��肳��ĊԈ����ΏۂƂ��đI�΂�Ă��܂��A�D��I�ɊԈ�����Ă��܂������ɂȂ�܂��B
-
-�܂��A�����͒ʏ�e���V�l��ɕt������邽�߁A�d���t���[����1��O�̃t���[���̊ԂɎ����̐؂�ڂ�����ƁA�����̗L���ɂ�蓮��������Ɣ��肳��ĊԈ����Ώۂ���R��Ă��܂��A���̕��{���c���ׂ��t���[��������ɊԈ�����Ă��܂������ɂȂ�܂��B  
-* �����̗L���́A�V�[���`�F���W���݂̑傫�ȓ����Ƃ��Ĕ��肳��邱�Ƃ��������߁A�����΍􂵂Ȃ���Ώd���Ɣ��肳��邱�Ƃ͂܂�����܂���B
-
-�Ȃ��AOverlay�t�B���^�[���g�p���āA�����\���G���A���}�X�N������Ԃ�TDecimate�ɏd�����肳���邱�ƂŁA�����̗L���ɂ��Ӑ}���Ȃ������h�����@������܂����A�}�X�N���Ă��镔���ɂ̂ݓ���������V�[�����������ꍇ�ɂ́A�������Ӑ}���Ȃ����肪�s���Ă��܂������ƂȂ邽�߁A�b�Ƃ��Ă͗]��ς��܂���B
-
-��ɋL�ڂ����ʂ�A23.976fps�̋t�e���V�l�̏ꍇ�́A5�t���[������1�t���[�����Ԉ��������Ȃ̂ŁA�����Ӑ}���Ȃ����肪�����Ă��A�������ɋC�t���Â炢�Ǝv���܂��B  
-�������A25fps�̋t�e���V�l�̏ꍇ�́A199�t���[������33�t���[�����Ԉ������߁A�Ӑ}���Ȃ����肪�A�����̌��ɉe������\���������Ȃ�܂��B
-
-�]�k�ł����A�C���^�[���[�X�\�[�X��29.97fps����25fps�֋t�e���V�l���邽�߂�Srestore�X�N���v�g���g�p������@�͗ǂ��m���Ă��܂����A����������ꍇ�͓��l�ɁA�d���t���[����1��O�̃t���[���̊ԂɎ����̐؂�ڂ����邹���ŏd���t���[�������̂܂܎c��A�{���c���ׂ��t���[��������ɊԈ�����Ă��܂��B
-
-#### ���Ӑ}���Ȃ��d�����肪�N����悭���錴���܂Ƃ�
-* �P�F(��ɔ��⍕)�A�قړ������Ȃ�(�܂��͊��S�ɂȂ�)�Ƃ������V�[��
-* �e���V�l��ɒǉ����ꂽ����  
-  * �d���t���[����1��O�̃t���[���̊ԂɎ����̐؂�ڂ����镔��
-* Overlay�t�B���^�[���g�p���ă}�X�N���������ɂ̂ݓ���������V�[��
-
-�������A��������{�l���C�ɂȂ�Ȃ��̂ł���΁A������ł͂���܂���B  
-�C�ɂȂ�̂ł���΁A�����̈Ӑ}���Ȃ��d�������h���A�����ɏ]���Ċ��S�ɈӐ}�����d���t���[�����Ԉ����K�v������܂��B
-
-�����Ŏg�p����̂��ATDecimate�̃p�����[�^�[`ovr`�ł��B  
-* `ovr`�́A�C�ӂ̃e�L�X�g�t�@�C����ǂݍ��݁A�����ɋL�q���ꂽ�ʂ�Ƀt���[�����Ԉ������Ƃ��ł��܂��B  
-* `ovr`�̎w��́A���̑S�Ẵp�����[�^�[�̎w��𖳎����ėD�悳��܂��B
-
-�܂�A�S�Ẵt���[�����̊Ԉ����E�c�������L�ڂ����e�L�X�g�t�@�C����p�ӂ��āA`ovr`�œǂݍ��ނ��ƂŁA**100%�Ӑ}�����ʂ�Ƀt���[�����Ԉ������Ƃ��ł���**�A�Ƃ������Ƃł��B
+これらのソースは、本ガイドの方法で逆テレシネすることが難しいため、29.97fpsのままとするか、59.94fps化を検討しましょう。
 
 ---
-## 4. �t�e���V�l�̎��{
+## 3. 実施の前に（TDecimateを使用する理由・目的）
 
-### ���K�v�ȃA�v���P�[�V�����E�v���O�C���E�t�@�C��
-* [AviSynthPlus](https://github.com/AviSynth/AviSynthPlus)  ���o�[�W�����w��Ȃ��A[AviSynthNeo-r2827](https://github.com/nekopanda/AviSynthPlus/releases/tag/r2827)�ł���  
-* [AvsPmod](https://github.com/gispos/AvsPmod)  ���ŐV�Ő��� (�L�ڎ��_�Fv2.7.6.1)  
-* [TIVTC](https://github.com/pinterf/TIVTC)  ���ŐV�Ő��� (�L�ڎ��_�Fv1.0.28)  
-* �C�ӂ̓���ǂݍ��݃v���O�C��(LSMASHSource�AFFMpegSource��)  
-  * �G���R�[�h�A�v���P�[�V�����Ɠ����o�͌��ʂł���K�v������܂��B  
-����ǂݍ��݃v���O�C�����́A�����́A�v���O�C���̃I�v�V�������w��ł��Ȃ��A�v���P�[�V�����ŃG���R�[�h���s���ꍇ�AAvsPmod��ł͐������w��ł��Ă���̂ɁA�G���R�[�h��̊Ԉ������ʂ��قȂ�ꍇ������܂��B  
-���̏ꍇ�́A�G���R�[�h�A�v���P�[�V�����Ɠ����o�͂ɂȂ�悤�ɁA���̃v���O�C���Ɏw�肷��I�v�V������v���O�C�����̂�ύX���Ă݂铙�A���s���낵�Ă��������B  
-(���i[Amatsukaze](https://github.com/rigaya/Amatsukaze)���g�p���Ă��܂����AAvsPmod����LSMASHSource�̃I�v�V�����w�肪�����ŁA�ǂ����Ă����ʂ����킸�ɔY�񂾌o��������܂��B)
-* �C�ӂ̃e�L�X�g�G�f�B�^�[  
-* �C�ӂ̃X�v���b�h�V�[�g�G�f�B�^�[
+2章の周期に従って重複フレームを間引くことができれば、元の25fpsを復元(逆テレシネ/Inverse Telecine(IVTC))することができます。  
+重複フレームを間引くために、AviSynthのプラグイン**TIVTC**に含まれる**TDecimate**を使用します。
+
+TDecimateは、パラメーター`Cycle`に指定したフレーム数の範囲内から、パラメーター`CycleR`に指定したフレーム数を間引きます。  
+* 2章のCycleをTDecimateに当てはめると、以下の設定になります。  
+※そのまま、29.97fpsを25fpsへ間引く設定となります。
+
+  * 29.97fps→25fps：`CycleR=33,Cycle=199`
+
+* 参考までに、29,97fpsを23.976fpsへ間引く場合の設定です。
+
+  * 29.97fps→23.976fps：`CycleR=1,Cycle=5`
+
+間引かれる対象のフレーム33個は、基本的に、一つ手前のフレームとの差分が最も小さいと判定された順番に選ばれます。  
+* `mode`や`dupThresh`や`sdlim`等のパラメーターの指定により、選択される対象をある程度コントロールできますが、その対象の中では、常に差分が最も小さいと判定された順番に選ばれます。
+
+そのため、単色(主に白や黒)、ほぼ動きがない(または完全にない)といったシーンがあると、周期に従って存在する重複フレームよりも差分が小さいと判定されて間引く対象として選ばれてしまい、優先的に間引かれてしまう原因になります。
+
+また、字幕は通常テレシネ後に付加されるため、重複フレームと1つ手前のフレームの間に字幕の切れ目があると、字幕の有無により動きがあると判定されて間引く対象から漏れてしまい、その分本来残すべきフレームが代わりに間引かれてしまう原因になります。  
+* 字幕の有無は、シーンチェンジ並みの大きな動きとして判定されることが多いため、何も対策しなければ重複と判定されることはまずありません。
+
+なお、Overlayフィルターを使用して、字幕表示エリアをマスクした状態でTDecimateに重複判定させることで、字幕の有無による意図しない判定を防ぐ方法がありますが、マスクしている部分にのみ動きがあるシーンがあった場合には、同じく意図しない判定が行われてしまう原因となるため、話としては余り変わりません。
+
+上に記載した通り、23.976fpsの逆テレシネの場合は、5フレーム毎に1フレームを間引くだけなので、多少意図しない判定があっても、視聴時に気付きづらいと思います。  
+しかし、25fpsの逆テレシネの場合は、199フレーム毎に33フレームを間引くため、意図しない判定が、視聴体験に影響する可能性が高くなります。
+
+余談ですが、インターレースソースを29.97fpsから25fpsへ逆テレシネするためにSrestoreスクリプトを使用する方法は良く知られていますが、字幕がある場合は同様に、重複フレームと1つ手前のフレームの間に字幕の切れ目があるせいで重複フレームがそのまま残り、本来残すべきフレームが代わりに間引かれています。
+
+#### ◇意図しない重複判定が起こるよくある原因まとめ
+* 単色(主に白や黒)、ほぼ動きがない(または完全にない)といったシーン
+* テレシネ後に追加された字幕  
+  * 重複フレームと1つ手前のフレームの間に字幕の切れ目がある部分
+* Overlayフィルターを使用してマスクした部分にのみ動きがあるシーン
+
+もちろん、視聴する本人が気にならないのであれば、何ら問題ではありません。  
+気になるのであれば、これらの意図しない重複判定を防ぎつつ、周期に従って完全に意図した重複フレームを間引く必要があります。
+
+そこで使用するのが、TDecimateのパラメーター`ovr`です。  
+* `ovr`は、任意のテキストファイルを読み込み、そこに記述された通りにフレームを間引くことができます。  
+* `ovr`の指定は、他の全てのパラメーターの指定を無視して優先されます。
+
+つまり、全てのフレーム毎の間引く・残す情報を記載したテキストファイルを用意して、`ovr`で読み込むことで、**100%意図した通りにフレームを間引くことができる**、ということです。
+
+---
+## 4. 逆テレシネの実施
+
+### ◇必要なアプリケーション・プラグイン・ファイル
+* [AviSynthPlus](https://github.com/AviSynth/AviSynthPlus)  ※バージョン指定なし、[AviSynthNeo-r2827](https://github.com/nekopanda/AviSynthPlus/releases/tag/r2827)でも可  
+* [AvsPmod](https://github.com/gispos/AvsPmod)  ※最新版推奨 (記載時点：v2.7.6.1)  
+* [TIVTC](https://github.com/pinterf/TIVTC)  ※最新版推奨 (記載時点：v1.0.28)  
+* 任意の動画読み込みプラグイン(LSMASHSource、FFMpegSource等)  
+  * エンコードアプリケーションと同じ出力結果である必要があります。  
+動画読み込みプラグイン自体、或いは、プラグインのオプションを指定できないアプリケーションでエンコードを行う場合、AvsPmod上では正しく指定できているのに、エンコード後の間引き結果が異なる場合があります。  
+その場合は、エンコードアプリケーションと同じ出力になるように、このプラグインに指定するオプションやプラグイン自体を変更してみる等、試行錯誤してください。  
+(普段[Amatsukaze](https://github.com/rigaya/Amatsukaze)を使用していますが、AvsPmod側のLSMASHSourceのオプション指定が原因で、どうしても結果が合わずに悩んだ経験があります。)
+* 任意のテキストエディター  
+* 任意のスプレッドシートエディター
 * [25fpsIVTCforTDecimate.xlsx](https://github.com/Ikotas/25fpsIVTCGuide/raw/main/25fpsIVTCforTDecimate.xlsx)
 
-### ���O��Ƃ���\�[�X
-* �S�t���[�����v���O���b�V�u�t���[���ł���A25fps��29,97fps�փe���V�l���ꂽ�\�[�X
-  * �C���^�[���[�X�\�[�X�́ATDecimate�̑O��YadifMod2���̃v���O�C���ŃC���^�[���[�X���������邱�ƂŁA�{�K�C�h�̕��@�����{�\�ł��B
-  * 24.975fps�͑ΏۊO�ł����A�������"`CycleR=1,Cycle=6`"���邾���ł��B
+### ◇前提とするソース
+* 全フレームがプログレッシブフレームである、25fpsを29,97fpsへテレシネされたソース
+  * インターレースソースは、TDecimateの前にYadifMod2等のプラグインでインターレース解除をすることで、本ガイドの方法を実施可能です。
+  * 24.975fpsは対象外ですが、こちらは"`CycleR=1,Cycle=6`"するだけです。
 
-### ��AvsPmod�ݒ�
-Ctrl+Left/Right�ŕ\��Cycle��؂�ւ�����悤�ɂ��܂��B
-* �J�X�^���W�����v�T�C�Y�F166
-* �J�X�^���W�����v�T�C�Y�̒P�ʁF�t���[��
-* �J�X�^���V���[�g�J�b�g
-  * �r�f�I(V) -> �ړ�(N) -> x�i�ށFCtrl+Right
-  * �r�f�I(V) -> �ړ�(N) -> x�߂�FCtrl+Left
+### ◇AvsPmod設定
+Ctrl+Left/Rightで表示Cycleを切り替えられるようにします。
+* カスタムジャンプサイズ：166
+* カスタムジャンプサイズの単位：フレーム
+* カスタムショートカット
+  * ビデオ(V) -> 移動(N) -> x進む：Ctrl+Right
+  * ビデオ(V) -> 移動(N) -> x戻る：Ctrl+Left
 
-### ��25fpsIVTCforTDecimate.xlsx�̐���
-3�͂̎��������ۂɋL�ڂ����ꗗ�ł��B  
-���}�N���͎g�p���Ă��܂���B
-* �s
-  * Cycle�O���[�v(�t���[���̔z�u�������Cycle�̂܂Ƃ܂�)����1�s�ł��B
-  * 1�s��A��No.1����200�s��A��No.14�܂łŎ����S�̂ƂȂ�܂��B
-    * 200�s�ڂ̎��́A1�s�ڂɖ߂��Ă��������B
-* ��
-  * A��c�\1.��No.�ɑ�������ԍ�(No.2, 4, 6, 8, 10, 12�͎}�ԕt�^)
-    * �w�i�F�����̒ʂ�ɓh�蕪���Ă��܂��B
-      * No.1, 13 �c �ΐF
-      * No.2, 4, 6, 8, 10, 12 �c �F
-      * No.3, 5, 7, 9, 11 �c ���F
-      * No.14 �c �ԐF
-  * B��cCycle�O���[�v�̐擪�t���[���ԍ�
-  * C��cCycle�O���[�v�̍ŏI�t���[���ԍ�
-    * �ҏW����̂́A����2��ł��B
-    * ���߂���l�������Ă��܂����A���ۂ̃\�[�X�̎����́A1�s�ڂ���n�܂�Ƃ͌���Ȃ����߁A�r���̍s��K�X���������Ă������ƂɂȂ�܂��B
-  * D��cCycle���̑S�t���[����"`+`"��"`-`"�ŕ\��������
-    * <font color="Red">���̗�͕ҏW���Ȃ��ł��������B</font>
-    * "`+`"�͎c���t���[���A"`-`"�͊Ԉ����t���[���ł��B
-    * �ڈ��ƂȂ�ND6�������₷���悤�ɁA�Y���ӏ�"<font color="Red">`++++++-`</font>"��Ԏ��ɂ��Ă��܂��B  
-  * E��cB��`D������������l
-    * ���̗�̒l��ovr�œǂݍ��ރt�@�C���ɓ\��t���܂��B
+### ◇25fpsIVTCforTDecimate.xlsxの説明
+3章の周期を実際に記載した一覧です。  
+※マクロは使用していません。
+* 行
+  * Cycleグループ(フレームの配置が同一のCycleのまとまり)毎に1行です。
+  * 1行目A列No.1から200行目A列No.14までで周期全体となります。
+    * 200行目の次は、1行目に戻ってください。
+* 列
+  * A列…表1.のNo.に相当する番号(No.2, 4, 6, 8, 10, 12は枝番付与)
+    * 背景色を次の通りに塗り分けています。
+      * No.1, 13 … 緑色
+      * No.2, 4, 6, 8, 10, 12 … 青色
+      * No.3, 5, 7, 9, 11 … 黄色
+      * No.14 … 赤色
+  * B列…Cycleグループの先頭フレーム番号
+  * C列…Cycleグループの最終フレーム番号
+    * 編集するのは、この2列です。
+    * 初めから値が入っていますが、実際のソースの周期は、1行目から始まるとは限らないため、途中の行を適宜書き換えていくことになります。
+  * D列…Cycle内の全フレームを"`+`"と"`-`"で表したもの
+    * <font color="Red">この列は編集しないでください。</font>
+    * "`+`"は残すフレーム、"`-`"は間引くフレームです。
+    * 目安となるND6を見つけやすいように、該当箇所"<font color="Red">`++++++-`</font>"を赤字にしています。  
+  * E列…B列～D列を結合した値
+    * この列の値をovrで読み込むファイルに貼り付けます。
 
-### (1) ���O����
-TDecimate�̃p�����[�^�[`ovr`�œǂݍ��ނ��߂̋�̃e�L�X�g�t�@�C�����쐬���A�C�ӂ̃t�@�C�����ŔC�ӂ̃p�X�ɕۑ����܂��B(���̃K�C�h���ł�`C:\ovr\ovr.txt`�Ƃ��܂��B)  
-���̃e�L�X�g�t�@�C���́A�C�ӂ̃e�L�X�g�G�f�B�^�[�ŊJ���Ă����܂��B  
-�܂��A�C�ӂ̃X�v���b�h�V�[�g�G�f�B�^�[�ŁA25fpsIVTCforTDecimate.xlsx���J���Ă����܂��B
+### (1) 事前準備
+TDecimateのパラメーター`ovr`で読み込むための空のテキストファイルを作成し、任意のファイル名で任意のパスに保存します。(このガイド内では`C:\ovr\ovr.txt`とします。)  
+このテキストファイルは、任意のテキストエディターで開いておきます。  
+また、任意のスプレッドシートエディターで、25fpsIVTCforTDecimate.xlsxを開いておきます。
 
-### (2) �����\��
-�@������\�����邽�߂ɁAAvsPmod�Ɉȉ����L�q���܂��B
+### (2) 周期表示
+①周期を表示するために、AvsPmodに以下を記述します。
 
 ```
-# ����ǂݍ��݃v���O�C��("����t�@�C���p�X")
-# ��)
+# 動画読み込みプラグイン("動画ファイルパス")
+# 例)
 # lwlibavvideosource("x:\xxx\xxx.ts",dr=true,repeat=true)
 # Trim(x,y)
 
 TDecimate(mode=0,CycleR=33,Cycle=199,ovr="c:\ovr\ovr.txt",sdlim=-5,display=true,displayOpt=6)
 
-# ovr="" ��(1)�ō쐬�����e�L�X�g�t�@�C�����w�肵�܂��B
+# ovr="" に(1)で作成したテキストファイルを指定します。
 
-# sdlim�̎w��͔C�ӂ̂��߁A�ȉ��ł���
+# sdlimの指定は任意のため、以下でも可
 # TDecimate(mode=0,CycleR=33,Cycle=199,ovr="c:\ovr\ovr.txt",display=true,displayOpt=6)
 
-# TDecimate�̈ꗗ�����Â炯��ΔC�ӂɃ��T�C�Y
-# ��)
+# TDecimateの一覧が見づらければ任意にリサイズ
+# 例)
 # BlackmanResize(1280,720)
 
 return last
 ```
 
-* ovr�œǂݍ��ރt�@�C���̃p�X�E�t�@�C�����͊��ɍ��킹�ĕҏW���Ă��������B
-* �p�����[�^�[`sdlim`�́A�Ԉ����Ώۂ̊Ԋu���w�肵�܂��B  
-"`sdlim=-5`"�Ƃ��邱�ƂŁA�Ȃ�ׂ��Ԃ�5�t���[�����񂾊Ԋu�őΏۂ�I�����܂��B  
-��"�Ȃ�ׂ�"�Ə������ʂ�A���ۂ͂����Ȃ�Ȃ����Ƃ��悭����܂��B  
-���K�{�̃p�����[�^�[�ł͂Ȃ����߁A�Ȃ��Ă���肠��܂���B
-* �p�����[�^�[`display`�́A�f�o�b�O���̕\���𐧌䂵�܂��B  
-"`display=true`"�Ƃ��邱�ƂŁA��ʂɈꗗ��\�����܂��B  
-�G���R�[�h����ۂ́A`display=false`�Ƃ��邩�A�p�����[�^�[���̂��폜���邩�A�̂ǂ��炩�����Ȃ��ƁA�G���R�[�h��̍Đ���ʂɂ��ꗗ���\������܂��̂ŁA�����ӂ��������B  
-(���̏ꍇ�́A�p�����[�^�[�w����C�����čēx�G���R�[�h��������������܂���B)
-  * AviSynth�{�̂�GUI���������A�������ʂ�\�������ʂ������Ȃ����߁A���掩�̂ɕ������𖄂ߍ��݁A�G���R�[�h��̍Đ���ʂŏ������ʂ��m�F����d�g�݂ɂȂ��Ă��܂��B  
-AvsPmod�́A�G���R�[�h���s�킸�ɏ������ʂ��m�F�ł���悤�ɂ����t�����g�G���h�ł��̂ŁA���̎d�g�݂͕ς��܂���B
+* ovrで読み込むファイルのパス・ファイル名は環境に合わせて編集してください。
+* パラメーター`sdlim`は、間引く対象の間隔を指定します。  
+"`sdlim=-5`"とすることで、なるべく間に5フレーム挟んだ間隔で対象を選択します。  
+※"なるべく"と書いた通り、実際はそうならないこともよくあります。  
+※必須のパラメーターではないため、省いても問題ありません。
+* パラメーター`display`は、デバッグ情報の表示を制御します。  
+"`display=true`"とすることで、画面に一覧を表示します。  
+エンコードする際は、`display=false`とするか、パラメーター自体を削除するか、のどちらかをしないと、エンコード後の再生画面にも一覧が表示されますので、ご注意ください。  
+(この場合は、パラメーター指定を修正して再度エンコードし直すしかありません。)
+  * AviSynth本体はGUIを持たず、処理結果を表示する画面を持たないため、動画自体に文字情報を埋め込み、エンコード後の再生画面で処理結果を確認する仕組みになっています。  
+AvsPmodは、エンコードを行わずに処理結果を確認できるようにしたフロントエンドですので、この仕組みは変わりません。
 
-* �p�����[�^�[`displayOpt`�́A�Ԉ����Ώۂɕ\������}�[�N("`**`")���A�}�[�N����}�[�N�܂ł̋����ɉ����ďo��������悤���܂��B("`<<`","`**`","`>>`")  
-�����"`displayOpt=6`"�Ƃ��邱�ƂŁA��O�̃}�[�N���琔����6�ڂɕ\�������}�[�N�͕W����"`**`"�A�����菭�Ȃ������̏ꍇ��"`<<`"�A���������̏ꍇ��"`>>`"�ƕ\������܂��B
-Cycle���ōł������o�ꂷ��A���t���[����+1���w�肷��ƁA�ł����₷���Ǝv���܂��B
+* パラメーター`displayOpt`は、間引く対象に表示するマーク("`**`")を、マークからマークまでの距離に応じて出し分けるようします。("`<<`","`**`","`>>`")  
+今回は"`displayOpt=6`"とすることで、一つ前のマークから数えて6個目に表示されるマークは標準の"`**`"、それより少ない距離の場合は"`<<`"、多い距離の場合は"`>>`"と表示されます。
+Cycle内で最も多く登場する連続フレーム数+1を指定すると、最も見やすいと思います。
 
-  * `displayOpt`�́A2023.12.10 GMT+9�Ƀ����[�X���ꂽ�o�[�W����(TIVTC v1.0.28/TDecimate v1.0.10)�Œǉ�����܂����I
+  * `displayOpt`は、2023.12.10 GMT+9にリリースされたバージョン(TIVTC v1.0.28/TDecimate v1.0.10)で追加されました！
 
-* �p�����[�^�[�̏ڍא����₻�̑��̃p�����[�^�[�ɂ��ẮA[TDecimate�̃h�L�������g](https://raw.githubusercontent.com/pinterf/TIVTC/master/Doc_TIVTC/TDecimate%20-%20READ%20ME.txt)���Q�Ƃ��Ă��������B
+* パラメーターの詳細説明やその他のパラメーターについては、[TDecimateのドキュメント](https://raw.githubusercontent.com/pinterf/TIVTC/master/Doc_TIVTC/TDecimate%20-%20READ%20ME.txt)を参照してください。
 
 
-�AF5�L�[�Ńv���r���[��\�����ATDecimate�̈ꗗ���m�F���܂��B
+②F5キーでプレビューを表示し、TDecimateの一覧を確認します。
 
-### (3) ovr�œǂݍ��ރt�@�C���̍쐬
-�@25fpsIVTCforTDecimate.xlsx�̈ꗗ����ATDecimate�̈ꗗ�ƍ��v����s(Cycle�O���[�v)��T���܂��B  
+### (3) ovrで読み込むファイルの作成
+①25fpsIVTCforTDecimate.xlsxの一覧から、TDecimateの一覧と合致する行(Cycleグループ)を探します。  
 
-1. Cycle�̐擪�̏d���t���[���܂ł̃t���[�������m�F����  
-    * TDecimate�̈ꗗ�̍ŏ��̃}�[�N("`**`")�܂ł̏d�����Ȃ��A���t���[�����ƁA25fpsIVTCforTDecimate.xlsx��D��̐擪��"`+`"�̘A����������Cycle�ɍi��܂��B
-2. ND6��T��  
-    * TDecimate�̈ꗗ�ł́A`displayOpt=6`�̎w��ɂ��AND5�̃}�[�N��"`**`"�AND6�̃}�[�N��"`>>`"�ƕ\������܂��B  
-    * 25fpsIVTCforTDecimate.xlsx��D��ł́AND6��"<font color="Red">`++++++-`</font>"�ƕ\����A�Ԏ��ŏ�����Ă��܂��B  
-(�������A�قƂ�ǂ̍s�͉������L��������s�����肵�Ȃ���"<font color="Red">`++++++-`</font>"�͌����Ȃ����߁ATDecimate�̈ꗗ�Ő擪����܂��͖������牽�Ԗڂ�ND6������̂��𐔂��āA������A��̔ԍ��ŁA�擪����܂��͖������牽�Ԗڂ��𐔂������������I�ł��B)  
-    * TDecimate�̈ꗗ�Ɉ��"`>>`"�����݂��Ȃ��ꍇ�́AND6��Cycle���ׂ��Ă���A No.3, 5, 7, 9, 11�ɊY�����܂��B(���S�Ɏ����ɏ]���ăt���[�����z�u����Ă���O��)
-    * TDecimate�̈ꗗ�ŁA�Ԉ����Ώۂ̃}�[�N("`<<`","`**`","`>>`")�������ʂ�ɔz�u����Ă��炸�T���ɂ����ꍇ�́ACtrl+Left/Right��Cycle��؂�ւ��܂��B
+1. Cycleの先頭の重複フレームまでのフレーム数を確認する  
+    * TDecimateの一覧の最初のマーク("`**`")までの重複がない連続フレーム数と、25fpsIVTCforTDecimate.xlsxのD列の先頭の"`+`"の連続数が同じCycleに絞ります。
+2. ND6を探す  
+    * TDecimateの一覧では、`displayOpt=6`の指定により、ND5のマークは"`**`"、ND6のマークは"`>>`"と表示されます。  
+    * 25fpsIVTCforTDecimate.xlsxのD列では、ND6は"<font color="Red">`++++++-`</font>"と表され、赤字で書かれています。  
+(ただし、ほとんどの行は横幅を広げたり改行したりしないと"<font color="Red">`++++++-`</font>"は見えないため、TDecimateの一覧で先頭からまたは末尾から何番目にND6があるのかを数えて、同じくA列の番号で、先頭からまたは末尾から何番目かを数えた方が現実的です。)  
+    * TDecimateの一覧に一つも"`>>`"が存在しない場合は、ND6がCycleを跨っている、 No.3, 5, 7, 9, 11に該当します。(完全に周期に従ってフレームが配置されている前提)
+    * TDecimateの一覧で、間引く対象のマーク("`<<`","`**`","`>>`")が周期通りに配置されておらず探しにくい場合は、Ctrl+Left/RightでCycleを切り替えます。
 
-�A���v����s(Cycle�O���[�v)������������AB��AC������������܂��B
-* B��cCycle�O���[�v�̐擪�t���[���ԍ�
-* C��cCycle�O���[�v�̍ŏI�t���[���ԍ�
-  * Ctrl+Left/Right��Cycle��؂�ւ��āA���v����Cycle�O���[�v�̍ŏ���Cycle�ƍŌ��Cycle��T���A�ŏ���Cycle�̐擪�t���[���ԍ���B��ɁA�Ō��Cycle�̍ŏI�t���[���ԍ���C��ɏ����܂��B
-  * �Z���ɂ͌v�Z���������Ă��邽�߁A�ҏW�����s�ȍ~�������Ő��l���ς��܂��B  
-(B��AC��̌v�Z���������Ă���ꍇ�͓K�X�C�����Ă��������B)
-    * B��̃Z��
-      * �S�Ă�No.
-        * ��s���C��̃Z���̒l+1 (����B2�̏ꍇ��"`=C1+1`")
-    * C��̃Z��
+②合致する行(Cycleグループ)が見つかったら、B列、C列を書き換えます。
+* B列…Cycleグループの先頭フレーム番号
+* C列…Cycleグループの最終フレーム番号
+  * Ctrl+Left/RightでCycleを切り替えて、合致したCycleグループの最初のCycleと最後のCycleを探し、最初のCycleの先頭フレーム番号をB列に、最後のCycleの最終フレーム番号をC列に書きます。
+  * セルには計算式が入っているため、編集した行以降も自動で数値が変わります。  
+(B列、C列の計算式が消えている場合は適宜修正してください。)
+    * B列のセル
+      * 全てのNo.
+        * 一行上のC列のセルの値+1 (現在B2の場合は"`=C1+1`")
+    * C列のセル
       * No.1, 2, 4, 6, 8, 10, 12, 13
-        * �����s��B��̃Z���̒l+1,193 (����C2�̏ꍇ��"`=B2+1193`")
+        * 同じ行のB列のセルの値+1,193 (現在C2の場合は"`=B2+1193`")
       * No.3, 5, 7, 9, 11
-        * �����s��B��̃Z���̒l+1,193+199 (����C34�̏ꍇ��"`=B34+1193+199`")
+        * 同じ行のB列のセルの値+1,193+199 (現在C34の場合は"`=B34+1193+199`")
       * No.14
-        * �����s��B��̃Z���̒l+198 (����C200�̏ꍇ��"`=B200+198`")
+        * 同じ行のB列のセルの値+198 (現在C200の場合は"`=B200+198`")
 
-�BE���K�v�ȕ��R�s�[���āAovr�œǂݍ��ރt�@�C���ɓ\��t���ĕۑ����܂��B
+③E列を必要な分コピーして、ovrで読み込むファイルに貼り付けて保存します。
 
-### (4) ovr�w���̊m�F
-�@AvsPmod��F5�L�[�������čēǂݍ��݂��s���Aovr�œǂݍ��ރt�@�C���ɕۑ������͈͂Ɠ����͈͂�TDecimate�̈ꗗ���m�F���܂��B
+### (4) ovr指定後の確認
+①AvsPmodでF5キーを押して再読み込みを行い、ovrで読み込むファイルに保存した範囲と同じ範囲のTDecimateの一覧を確認します。
 
-* �S�Ẵt���[���̎w�肪�������Ă��Ȃ��ꍇ�́A(3)(4)���J��Ԃ��܂��B  
+* 全てのフレームの指定が完了していない場合は、(3)(4)を繰り返します。  
 
-* �d���t���[���̎w�肪����Ă�����A�����ω����ɂ��Ӑ}�������ʂł͂Ȃ��ꍇ�́A�Y����Cycle���C�����܂��B
-* Cycle�̓r���Ŏ����ω����N�����ꍇ���ɂ́Aovr�œǂݍ��ރt�@�C���̒��ڕҏW���K�v�ł��B  
-TDecimate�̈ꗗ��ovr�œǂݍ��ރt�@�C���̊Y���ӏ����r���Ȃ���A"`+`","`-`"��K�X�ҏW���Ă��������B
-  #### Cycle�̓r���̎����ω��ɑΉ����ĕҏW����ۂ̒��ӓ_
+* 重複フレームの指定が誤っていたり、周期変化等により意図した結果ではない場合は、該当のCycleを修正します。
+* Cycleの途中で周期変化が起きた場合等には、ovrで読み込むファイルの直接編集が必要です。  
+TDecimateの一覧とovrで読み込むファイルの該当箇所を比較しながら、"`+`","`-`"を適宜編集してください。
+  #### Cycleの途中の周期変化に対応して編集する際の注意点
     * **25fpsIVTCforTDecimate.xlsx**
-      * B���Cycle�O���[�v�̐擪�t���[���ԍ��́A�K��199�̔{������͂��܂��B  
-�قȂ�ԍ�����͂��Ă����쎩�̂Ɏx��͂���܂��񂪁ATDecimate�̈ꗗ�Ƃ���Ă��܂��A�c�����Â炭�Ȃ�܂��̂ŁA�������߂��܂���B
-      * �����ω������邩��ƁAD��𒼐ڕҏW���Ȃ��ł��������B  
-        Cycle��ҏW����̂́Aovr�œǂݍ��ރt�@�C���ł��B
+      * B列のCycleグループの先頭フレーム番号は、必ず199の倍数を入力します。  
+異なる番号を入力しても動作自体に支障はありませんが、TDecimateの一覧とずれてしまい、把握しづらくなりますので、おすすめしません。
+      * 周期変化があるからと、D列を直接編集しないでください。  
+        Cycleを編集するのは、ovrで読み込むファイルです。
 
-    * **ovr�œǂݍ��ރt�@�C��**
-      * ��s�ɁA"`+`"��166�A"`-`"��33�A���v199�ŌŒ�ł��B("`Cycle=199`"�̏ꍇ)  
-        * ���v199�͈̔͂�"`+`","`-`"���قȂ鐔�Ŏw�肵�Ă��A�t���[�����[�g�̈ێ���D�悵�āATDecimate�ɓǂݍ��݌�Ɏ����I�ɏ�L�̐��ɒ�������܂��B  
-(TDecimate�̈ꗗ�Ŋm�F�ł��܂��B)  
-        * ���v��199�ł͂Ȃ��ꍇ�́A���̕��t���[���ԍ��̎w�肪����āA�Ӑ}���Ȃ��o�͌��ʂƂȂ��Ă��܂��܂��̂ł����ӂ��������B  
-(TDecimate�̈ꗗ�ō����ł��܂��B)
-      * �����1Cycle�̂ݏC�����邽�߂ɁA�Y����Cycle���܂�Cycle�O���[�v�̍s�𕡐����āACycle�𕪗�����K�v������܂��B  
+    * **ovrで読み込むファイル**
+      * 一行に、"`+`"は166個、"`-`"は33個、合計199個で固定です。("`Cycle=199`"の場合)  
+        * 合計199個の範囲で"`+`","`-`"を異なる数で指定しても、フレームレートの維持を優先して、TDecimateに読み込み後に自動的に上記の数に調整されます。  
+(TDecimateの一覧で確認できます。)  
+        * 合計が199個ではない場合は、その分フレーム番号の指定がずれて、意図しない出力結果となってしまいますのでご注意ください。  
+(TDecimateの一覧で混乱できます。)
+      * 特定の1Cycleのみ修正するために、該当のCycleを含むCycleグループの行を複製して、Cycleを分離する必要があります。  
 
-        ��) Cycle(33432,33630)��ҏW���邽�߁ACycle�O���[�v���番��
-          * �����O�F
-            * **<font color="Blue">32437</font>**,**<font color="Blue">33630</font>** +-+\+\+\+\+...  Cycle�O���[�v(6Cycle)�͈͎̔w��
-          * ������F
-            * **<font color="Blue">32437</font>**,33431 +-+\+\+\+\+...  5Cycle�ɔ͈͕ύX
-            * 33432,**<font color="Blue">33630</font>** +-+\+\+\+\+\... 1Cycle�ɐ؂�o�������̍s��ҏW  
+        例) Cycle(33432,33630)を編集するため、Cycleグループから分離
+          * 分離前：
+            * **<font color="Blue">32437</font>**,**<font color="Blue">33630</font>** +-+\+\+\+\+...  Cycleグループ(6Cycle)の範囲指定
+          * 分離後：
+            * **<font color="Blue">32437</font>**,33431 +-+\+\+\+\+...  5Cycleに範囲変更
+            * 33432,**<font color="Blue">33630</font>** +-+\+\+\+\+\... 1Cycleに切り出したこの行を編集  
 
-        ������Y��Ă��̂܂ܕҏW���Ă��܂��ƁA����Cycle�O���[�v�̑S�Ă�Cycle�ɔ��f����Ă��܂����߁A���ӂ��܂��傤�B
+        分離を忘れてそのまま編集してしまうと、そのCycleグループの全てのCycleに反映されてしまうため、注意しましょう。
 
-    * **�ߑ��Fovr�t�@�C�����̋L�q**  
-���ڍׂ₻�̑��̋L�q�ɂ��ẮA[TDecimate�̃h�L�������g](https://raw.githubusercontent.com/pinterf/TIVTC/master/Doc_TIVTC/TDecimate%20-%20READ%20ME.txt)���Q�Ƃ��Ă��������B
-      * "`+`"�͎c���t���[���A"`-`"�͊Ԉ����t���[��
-      * �s��"`#`","`;`"�̓R�����g�A�E�g�s
-      * �t���[���͈͎w���"`29850,0`"�̂悤��"`0`"�̎w��́A�ŏI�t���[���ԍ��̎w��Ɠ���
+    * **捕捉：ovrファイル内の記述**  
+※詳細やその他の記述については、[TDecimateのドキュメント](https://raw.githubusercontent.com/pinterf/TIVTC/master/Doc_TIVTC/TDecimate%20-%20READ%20ME.txt)を参照してください。
+      * "`+`"は残すフレーム、"`-`"は間引くフレーム
+      * 行頭"`#`","`;`"はコメントアウト行
+      * フレーム範囲指定で"`29850,0`"のように"`0`"の指定は、最終フレーム番号の指定と同意
 
-�Aovr�œǂݍ��ރt�@�C���ɁA�S�Ẵt���[���̎w����s���AAvsPmod�ł̖ڎ��m�F���������܂�����A�c��̓G���R�[�h����݂̂ł��B  
+②ovrで読み込むファイルに、全てのフレームの指定を行い、AvsPmodでの目視確認も完了しましたら、残るはエンコードするのみです。  
 
-* **�ŏI�m�F**
-- [x] �S�Ẵt���[�����w�肳��Ă���A�R�ꂪ�Ȃ�����  
-  * �G���R�[�h��Ɋm�F������Ӑ}���Ȃ��t���[�����Ԉ�����Ă����A�Ƃ������Ƃ��Ȃ��悤�ɁA�K���S�Ẵt���[�����w�肳��Ă��邱�Ƃ��m�F���܂��傤�B
+* **最終確認**
+- [x] 全てのフレームが指定されており、漏れがないこと  
+  * エンコード後に確認したら意図しないフレームが間引かれていた、ということがないように、必ず全てのフレームが指定されていることを確認しましょう。
 
-### (5) ��H��
-avs�t�@�C����ǂݍ��݉\�ȔC�ӂ̃G���R�[�h�A�v���P�[�V�����ŃG���R�[�h�����{���Ă��������B
-  * �G���R�[�h����ۂ�TDecimate�̐ݒ�͈ȉ��ł��B
+### (5) 後工程
+avsファイルを読み込み可能な任意のエンコードアプリケーションでエンコードを実施してください。
+  * エンコードする際のTDecimateの設定は以下です。
     ```
     TDecimate(mode=0,CycleR=33,Cycle=199,ovr="c:\ovr\ovr.txt")
 
-    # ����ł���
+    # これでも可
     # TDecimate(mode=0,CycleR=33,Cycle=199,ovr="c:\ovr\ovr.txt",sdlim=-5)
     # TDecimate(mode=0,CycleR=33,Cycle=199,ovr="c:\ovr\ovr.txt",sdlim=-5,display=false)
     # TDecimate(mode=0,CycleR=33,Cycle=199,ovr="c:\ovr\ovr.txt",sdlim=-5,display=false,displayOpt=6)
 
     ```
-    * �p�X�E�t�@�C���������ɍ��킹�ĕύX���Ă��������B
-    * `sdlim`�͕s�v�ł����A�����Ă���肠��܂���B
-    * "`display=true`"���w�肵���܂܂��ƁA�G���R�[�h��̍Đ���ʂɂ��ꗗ���\������܂��̂ŁA�����ӂ��������B
-    * "`display=false`"�ł���Ζ�肠��܂���B
+    * パス・ファイル名を環境に合わせて変更してください。
+    * `sdlim`は不要ですが、あっても問題ありません。
+    * "`display=true`"を指定したままだと、エンコード後の再生画面にも一覧が表示されますので、ご注意ください。
+    * "`display=false`"であれば問題ありません。
 
 ---
-## 5. Cycle���̏d���t���[������33�ł͂Ȃ��ꍇ�̏������@
+## 5. Cycle内の重複フレーム数が33ではない場合の処理方法
 
-No.14��Cycle(�d���t���[����34)��ATV�R�}�[�V�������ɂ��Cycle���̎����ω��ɂ��ACycle���̏d���t���[������`CycleR`�̎w�萔33�ƈقȂ�ꍇ������܂��B
+No.14のCycle(重複フレーム数34)や、TVコマーシャル等によるCycle内の周期変化により、Cycle内の重複フレーム数が`CycleR`の指定数33と異なる場合があります。
 
-`Cycle=199`��25fps���ێ�����ꍇ�ɊԈ������t���[�����́A33�Œ�ł��B  
-�Ⴆovr�œǂݍ��ރt�@�C������"`-`"��33����ύX���Ă��ATDecimate���Ŏ����I�ɒ�������33���ێ�����܂��B  
-����𓥂܂��Ăǂ��ɂ����悤�ƕ҂ݏo�������@��������܂��B
+`Cycle=199`で25fpsを維持する場合に間引かれるフレーム数は、33個固定です。  
+例えovrで読み込むファイル側で"`-`"を33個から変更しても、TDecimate側で自動的に調整して33個が維持されます。  
+それを踏まえてどうにかしようと編み出した方法を説明します。
 
-* �����ɉe�����Ȃ��̂ł���΁A���̂܂ܕ��u����̂��y�ł��B  
-* �C�ɂȂ����Ԉ��������ɂ�����肽�����̂��߂̒ǉ��̃K�C�h�ł��B
+* 視聴に影響がないのであれば、そのまま放置するのが楽です。  
+* 気になる方や間引き処理にこだわりたい方のための追加のガイドです。
 
 
-### �����@1. ������ς���
+### ◇方法1. 周期を変える
 
-�\�[�X���̂�Trim�w��̐擪�t���[���̊J�n�ʒu��ύX���A�����I�Ɏ��������炷���ƂŁANo.14��Cycle�̗]�v�ȏd���t���[��������ł���ꍇ������܂��B  
+ソース自体のTrim指定の先頭フレームの開始位置を変更し、強制的に周期をずらすことで、No.14のCycleの余計な重複フレームを回避できる場合があります。  
 
-* �\�[�X���̂�Trim�w��̐擪�t���[���̊J�n�ʒu��O���Ɋg��
-  * �ύX�O�F`Trim(30,78560)`
-  * �ύX��F`Trim(29,78560)`  ��1�t���[���ǉ�
+* ソース自体のTrim指定の先頭フレームの開始位置を前方に拡張
+  * 変更前：`Trim(30,78560)`
+  * 変更後：`Trim(29,78560)`  ※1フレーム追加
 
-�J�n�ʒu��ύX���邱�Ƃɂ��A���̕��s�v�ȃt���[�����܂܂�邱�ƂɂȂ邽�߁ATDecimate�̂��ƂɁA25fps�֕ϊ���̃t���[���ԍ��Œǉ���Trim�������΃J�b�g�\���Ǝv���܂��B  
-Amatsukaze�g�p�̏ꍇ�́A������͌�̎���(����)�̕ύX�͋�����Ă��Ȃ����߁A�G���R�[�h���{��ɁATMPGEnc MPEG Smart Render���̓���ҏW�A�v���P�[�V�����ŃJ�b�g�������s���Ă��������B
+開始位置を変更することにより、その分不要なフレームが含まれることになるため、TDecimateのあとに、25fpsへ変換後のフレーム番号で追加のTrimを書けばカット可能かと思います。  
+Amatsukaze使用の場合は、動画入力後の時間(長さ)の変更は許可されていないため、エンコード実施後に、TMPGEnc MPEG Smart Render等の動画編集アプリケーションでカット処理を行ってください。
 
-### �����@2. ����Cycle���Œu��������
+### ◇方法2. 同一Cycle内で置き換える
 
-�Ώۂ�Cycle���ɁA���������Ȃ��V�[��������ꍇ�́A�Ԉ����t���[�������͎c���t���[�����A���̉ӏ��̃t���[���ŏ������Ă��܂��̂������Ȃ��I���ł��B  
-���̏ꍇ�́Aovr�œǂݍ��ރt�@�C���̊Y��Cycle�����𒼐ڕҏW���AAvsPmod�Ŋm�F���܂��傤�B  
-�ҏW����ۂ̒��ӓ_�́A4�͂ɋL�ڂ̒ʂ�ł��B
+対象のCycle内に、動きが少ないシーンがある場合は、間引くフレーム或いは残すフレームを、その箇所のフレームで処理してしまうのも悪くない選択です。  
+この場合は、ovrで読み込むファイルの該当Cycle部分を直接編集し、AvsPmodで確認しましょう。  
+編集する際の注意点は、4章に記載の通りです。
 
-### �����@3. �傫��Cycle���w�肵�ė��ꂽ�t���[���ƒu��������
+### ◇方法3. 大きなCycleを指定して離れたフレームと置き換える
 
-�Ō�Ɉē�������@�ł����A�Ԉ��������ɂ�����肽����(��)�ɂ͖{���ł��B  
-2�͂Ő��������ʂ�ATDecimate�́A`Cycle`�Ɏw�肵���t���[�����͈͓̔�����A`CycleR`�Ɏw�肵���t���[�������Ԉ����܂��B  
-�����܂ŁA`Cycle`��"`199`"�A`CycleR`��"`33`"�ƌŒ�ł������A���傫�Ȓl���w�肷�邱�ƂŁA���L���͈͂ŊԈ����t���[����I�����邱�Ƃ��ł���悤�ɂȂ�܂��B
+最後に案内する方法ですが、間引き処理にこだわりたい方(私)には本命です。  
+2章で説明した通り、TDecimateは、`Cycle`に指定したフレーム数の範囲内から、`CycleR`に指定したフレーム数を間引きます。  
+ここまで、`Cycle`は"`199`"、`CycleR`は"`33`"と固定でしたが、より大きな値を指定することで、より広い範囲で間引くフレームを選択することができるようになります。
 
-#### `Cycle`�ɑ傫�Ȓl���w�肷��ۂ̒��ӓ_
-* �t���[�����[�g25fps���ێ����邽�߁A`Cycle`��`199`�̔{���A`CycleR`��`33`�̔{���Ŏw�肷��K�v������܂��B
-* `Cycle`�Ɏw�肷��l�́A�Ώۋ�Ԃ̑��t���[�����𒴂��Ďw�肷�邱�Ƃ͂ł��܂���B
-  * �ŏI�t���[���܂Ŋ܂߂�Cycle�Ɏw�肵�����̂�199�̔{���ɂȂ�Ȃ��ꍇ�́A�\�[�X���̂�Trim�w��𒲐�����K�v������܂��B(��2.�Q��)
+#### `Cycle`に大きな値を指定する際の注意点
+* フレームレート25fpsを維持するため、`Cycle`は`199`の倍数、`CycleR`は`33`の倍数で指定する必要があります。
+* `Cycle`に指定する値は、対象区間の総フレーム数を超えて指定することはできません。
+  * 最終フレームまで含めてCycleに指定したいのに199の倍数にならない場合は、ソース自体のTrim指定を調整する必要があります。(例2.参照)
 
-* �w�肷��l�̑傫���ɔ�Ⴕ�āA����ǂݍ��݂ɂƂĂ����Ԃ��|����悤�ɂȂ�܂��B  
-�w�肷��l�ɂ���Ă�5���ȏ�|���邱�Ƃ����邽�߁A�o�͂����܂ŋC���ɑ҂��܂��傤�B  
-�����o�͂��ꂽ���Ƃ́A`Cycle`�Ɏw�肵���͈͓��͒ǉ��ǂݍ��݂��������邱�ƂȂ��ACtrl+Left/Right��Cycle��؂�ւ��\�ł��B(���ɂ��قȂ邩������܂���)
-* `Cycle`�ɑ傫�Ȓl���w�肷��ꍇ�́A`displayDecimation=199`���ǉ��w�肵�Ă��������B
-  * �p�����[�^�[`displayDecimation`�́A�w�肵���t���[�����ňꗗ�𕪊����ĕ\�����܂��B  
-"`displayDecimation=199`"�Ƃ��邱�ƂŁA`Cycle`�ɑ傫�Ȓl��ݒ肵���ꍇ���A�ꗗ��199�t���[�����ɕ����ĕ\�����邱�Ƃ��ł��܂��B  
-("`Cycle=199`"�̈ꗗ�Ɠ��l�ɕ\�����邱�Ƃ��ł��܂��B)
-    * �ꗗ��`Cycle`�Ɏw�肵���t���[������S�ĕ\������d�l�̂��߁A`Cycle`�ɑ傫�Ȓl���w�肵�āA`displayDecimation`�̎w�肪�Ȃ��ꍇ�A�ꗗ����ʂɕ\�������ꂸ�A�m�F��Ƃ��ł��܂���̂ł����ӂ��������B  
-�܂��A`displayDecimation`�̎w�肪�Ȃ��ꍇ�A`Cycle`�Ɏw�肷��l�ɂ���ẮAAvsPmod�������I�ɏI�����Ă��܂����Ƃ�����܂��B  
-(���̊��ł́A`displayDecimation`���w�肵���ꍇ�́A`Cycle`��50,000���x�܂Ŏw�肵�Ă��A���������ǂݍ��݌�ɖ��Ȃ����삵�Ă��܂��B)
+* 指定する値の大きさに比例して、初回読み込みにとても時間が掛かるようになります。  
+指定する値によっては5分以上掛かることもあるため、出力されるまで気長に待ちましょう。  
+いざ出力されたあとは、`Cycle`に指定した範囲内は追加読み込みが発生することなく、Ctrl+Left/RightでCycleを切り替え可能です。(環境により異なるかもしれません)
+* `Cycle`に大きな値を指定する場合は、`displayDecimation=199`も追加指定してください。
+  * パラメーター`displayDecimation`は、指定したフレーム数で一覧を分割して表示します。  
+"`displayDecimation=199`"とすることで、`Cycle`に大きな値を設定した場合も、一覧を199フレーム毎に分けて表示することができます。  
+("`Cycle=199`"の一覧と同様に表示することができます。)
+    * 一覧は`Cycle`に指定したフレーム数を全て表示する仕様のため、`Cycle`に大きな値を指定して、`displayDecimation`の指定がない場合、一覧が画面に表示しきれず、確認作業ができませんのでご注意ください。  
+また、`displayDecimation`の指定がない場合、`Cycle`に指定する値によっては、AvsPmodが強制的に終了してしまうことがあります。  
+(私の環境では、`displayDecimation`を指定した場合は、`Cycle`に50,000程度まで指定しても、長い長い読み込み後に問題なく動作しています。)
 
-    * `displayDecimation`���w�肷��ƁA�ꗗ�̏㕔��"`#ofDecimations: x(y:z)`"���ǉ��\������܂��B
-      * x �c ���ݕ\�����̈ꗗ�͈͓̔��Ŏ��ۂɊԈ����ΏۂƂ��ă}�[�N������("`<<`","`**`","`>>`"�̍��v��)��\�����܂��B
-      * y �c `CycleR`�Ɏw�肵���Ԉ������̓��A���ݕ\�����̈ꗗ�̃}�[�N(x)���܂ށA�����܂łɊԈ����ΏۂƂ��ă}�[�N��������\�����܂��B
-      * z �c �Ԉ����ΏۂƂ��ă}�[�N����c��̐���\�����܂��B(CycleR=y+z)
-    * `displayDecimation`�́A2023.12.10 GMT+9�Ƀ����[�X���ꂽ�o�[�W����(TIVTC v1.0.28/TDecimate v1.0.10)�Œǉ�����܂����I
+    * `displayDecimation`を指定すると、一覧の上部に"`#ofDecimations: x(y:z)`"が追加表示されます。
+      * x … 現在表示中の一覧の範囲内で実際に間引く対象としてマークした数("`<<`","`**`","`>>`"の合計数)を表示します。
+      * y … `CycleR`に指定した間引き数の内、現在表示中の一覧のマーク(x)を含む、ここまでに間引く対象としてマークした数を表示します。
+      * z … 間引く対象としてマークする残りの数を表示します。(CycleR=y+z)
+    * `displayDecimation`は、2023.12.10 GMT+9にリリースされたバージョン(TIVTC v1.0.28/TDecimate v1.0.10)で追加されました！
 
-#### ��1.) 40596-40794��Cycle�̏d���t���[������34�ŁA49750-49948��Cycle�̏d���t���[������32�ł���
+#### 例1.) 40596-40794のCycleの重複フレーム数は34で、49750-49948のCycleの重複フレーム数は32である
 
 ```
 v1=Trim(0,40595).TDecimate(mode=0,CycleR=33,Cycle=199,ovr="c:\ovr\ovr-1.txt",display=true,displayOpt=6)
@@ -428,56 +428,56 @@ v2=Trim(40596,49948).TDecimate(mode=0,cycleR=1551,cycle=9353,ovr="c:\ovr\ovr-2.t
 v3=Trim(49949,0).TDecimate(mode=0,CycleR=33,Cycle=199,ovr="c:\ovr\ovr-3.txt",display=true,displayOpt=6)
 v1++v2++v3
 ```
-* Trim�ŕ������A40596-40794��49750-79948���܂߂�2�Ԗڂ�`Trim(40596-49948)`�ɁA`Cycle=9353`(199\*47)��`CycleR=1551`(33\*47)���w�肷�邱�ƂŁA��̑傫�Ȕ͈͂Ƃ��ĊԈ����������s���܂��B
-* Cycle���̏d���t���[���̑�����33�̔{���ŕς��Ȃ��Ȃ邽�߁A40596-40794�͈̔͂̏d���t���[������34�A49750-79948�͈̔͂̏d���t���[������32�A���ꂼ�ꂻ�̂܂܊Ԉ����������\�ƂȂ�܂��B
+* Trimで分割し、40596-40794と49750-79948を含めた2番目の`Trim(40596-49948)`に、`Cycle=9353`(199\*47)と`CycleR=1551`(33\*47)を指定することで、一つの大きな範囲として間引き処理を行います。
+* Cycle内の重複フレームの総数は33の倍数で変わらなくなるため、40596-40794の範囲の重複フレーム数は34、49750-79948の範囲の重複フレーム数は32、それぞれそのまま間引き処理が可能となります。
 
-#### ��2.) 78008-78206��Cycle�̏d���t���[������32�����Ȃ����A����1�t���[�����Ԉ������߂̓K���ȃt���[����������Ȃ�
+#### 例2.) 78008-78206のCycleの重複フレーム数が32しかないが、もう1フレームを間引くための適当なフレームが見つからない
 
-* �\�[�X���̂�Trim�w�������Ɋg��
-  * �ύX�O�F`Trim(30,78560)`  ��Trim��̃t���[����0-78530
-  * �ύX��F`Trim(30,78634)`  ��74�t���[���ǉ��ATrim��̃t���[����0-78604
+* ソース自体のTrim指定を後方に拡張
+  * 変更前：`Trim(30,78560)`  ※Trim後のフレームは0-78530
+  * 変更後：`Trim(30,78634)`  ※74フレーム追加、Trim後のフレームは0-78604
 
 ```
 v1=Trim(0,78007).TDecimate(mode=0,cycleR=33,cycle=199,ovr="c:\ovr\ovr-1.txt",display=true,displayOpt=6)
 v2=Trim(78008,0).TDecimate(mode=0,cycleR=99,cycle=597,ovr="c:\ovr\ovr-2.txt",display=true,displayDecimation=199,displayOpt=6)
 v1++v2
 
-# �s�v�ȃt���[�����J�b�g
+# 不要なフレームをカット
 # Trim(0,65533)
 ```
-* �\�[�X���̂�Trim�w��͈͓̔��ɁA�ǉ��ŊԈ����t���[����������Ȃ����߁A�����ĕs�v�ȃt���[�����܂߂āA����ɊԈ������Ƃɂ��܂��B  
-* 78008���N�_�ɂ���ƁA�ŏI�t���[��78530�܂ł̃t���[������523�ŁA199�̔{���ł͂Ȃ����߁A199�̔{���ɂȂ�悤�ɁA�\�[�X���̂�Trim�w���74�t���[�����g�����܂��B  
+* ソース自体のTrim指定の範囲内に、追加で間引くフレームが見つからないため、敢えて不要なフレームを含めて、代わりに間引くことにします。  
+* 78008を起点にすると、最終フレーム78530までのフレーム数は523で、199の倍数ではないため、199の倍数になるように、ソース自体のTrim指定を74フレーム分拡張します。  
 (523+74=597=199*3)
-* 78008���N�_�Ƃ���Trim��"`cycleR=99,cycle=597`"�Ǝw�肵�āA�g���������̕s�v�ȃt���[�����܂߂邱�Ƃ��ł��邽�߁A���̒��̓K����1�t���[�������ɊԈ����܂��B(74-1�t���[��)
-  * �_�����t���[�����Ԉ����悤�ɁAovr�œǂݍ��ރt�@�C����ҏW���܂��B
-* �c�����s�v��73�t���[���́A25fps�֕ϊ���̃t���[���ԍ��ŁA�ǉ���Trim�������΃J�b�g�\���Ǝv���܂��B(��L�R�����g�A�E�g����)  
-Amatsukaze�g�p�̏ꍇ�́A������͌�̎���(����)�̕ύX�͋�����Ă��Ȃ����߁A�G���R�[�h���{��ɁATMPGEnc MPEG Smart Render���̓���ҏW�A�v���P�[�V�����ŃJ�b�g�������s���Ă��������B
+* 78008を起点とするTrimに"`cycleR=99,cycle=597`"と指定して、拡張した分の不要なフレームを含めることができるため、その中の適当な1フレームを代わりに間引きます。(74-1フレーム)
+  * 狙ったフレームを間引くように、ovrで読み込むファイルを編集します。
+* 残った不要な73フレームは、25fpsへ変換後のフレーム番号で、追加のTrimを書けばカット可能かと思います。(上記コメントアウト部分)  
+Amatsukaze使用の場合は、動画入力後の時間(長さ)の変更は許可されていないため、エンコード実施後に、TMPGEnc MPEG Smart Render等の動画編集アプリケーションでカット処理を行ってください。
 
-#### �ߑ��F`Trim`�ŕ�������ꍇ�̒���
-* �t���[���ԍ���Trim�����Ń��Z�b�g����ATrim���Ƀt���[���ԍ�0����J�n���܂��B
-
----
-## 6. �Ō��(�ӎ�)
-
-TIVTC�́AAviSynth���g�p������ɂ͂��Ȃ��݂̃v���O�C�����Ǝv���܂����A���ɂƂ��ẮAAviSynth���g���������̗��R��(�傫��)��ł��B  
-���ɁA�{�K�C�h��29.97fps����25fps�ւ̋t�e���V�l�́A`Cycle`��"`199`"���w��\�A���A�O���t�@�C����ǂݍ���ŊԈ��������R���g���[���\��TDecimate�����������炱���A���z���������邱�Ƃ��ł��A���藧���Ă��܂��B  
-�������Ƃ��ł���Decimation�v���O�C���𑼂ɒm��܂���B  
-�I���W�i���̊J����tritical����ƁA���݂��X�V�������Ă��������Ă���pinterf����ɁA���Ӑ\���グ�܂��B
-
-�Ō�܂ł��ǂ݂��������Ă��肪�Ƃ��������܂����B  
-�{�K�C�h�������ɗ��ĂΉ����ł��B
+#### 捕捉：`Trim`で分割する場合の注意
+* フレーム番号はTrim分割でリセットされ、Trim毎にフレーム番号0から開始します。
 
 ---
+## 6. 最後に(謝辞)
 
-#### ��������
+TIVTCは、AviSynthを使用する方にはおなじみのプラグインだと思いますが、私にとっては、AviSynthを使ういくつかの理由の(大きな)一つです。  
+特に、本ガイドの29.97fpsから25fpsへの逆テレシネは、`Cycle`に"`199`"を指定可能、且つ、外部ファイルを読み込んで間引き情報をコントロール可能なTDecimateがあったからこそ、発想を実現することができ、成り立っています。  
+同じことができるDecimationプラグインを他に知りません。  
+オリジナルの開発者triticalさんと、現在も更新し続けてくださっているpinterfさんに、感謝申し上げます。
+
+最後までお読みいただいてありがとうございました。  
+本ガイドがお役に立てば何よりです。
+
+---
+
+#### 改訂履歴
 
 * 2023.12.21 v1.0
-  * ���Ō��J
+  * 初版公開
 
 ---
 
-#### �������
+#### 権利情報
 
-29.97fps��25fps�̋t�e���V�l(IVTC)�K�C�h &copy; 2023 Ikotas
+29.97fps→25fpsの逆テレシネ(IVTC)ガイド &copy; 2023 Ikotas
 
 <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a></p>
