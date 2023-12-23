@@ -457,9 +457,19 @@ Amatsukaze使用の場合は、動画入力後の時間(長さ)の変更は許�
 
 #### 捕捉：`Trim`で分割する場合の注意
 * フレーム番号はTrim分割でリセットされ、Trim毎にフレーム番号0から開始します。  
-`v1=Trim(0,78007)`  ※Trim後のフレーム番号は0-78007  
-`v2=Trim(78008,0)`  ※Trim後のフレーム番号は0-596  
-`v1++v2`
+"`Trim(0,78007)`"…Trim後のフレーム番号は0-78007  
+"`Trim(78008,78604)`"…Trim後のフレーム番号は0-596
+* ovrに読み込むファイルもTrim毎に分けて用意が必要となり、それぞれのフレーム番号は0から指定が必要です。  
+* 特定のTrimの範囲のみ確認したい場合は、以下のように、他のTrimをコメントアウトします。  
+  ```
+  # v1=Trim(0,40595).TDecimate(mode=0,CycleR=33,Cycle=199,ovr="c:\ovr\ovr-1.txt",display=true,displayOpt=6)
+  v2=Trim(40596,49948).TDecimate(mode=0,cycleR=1551,cycle=9353,ovr="c:\ovr\ovr-2.txt",display=true,displayDecimation=199,displayOpt=6)
+  # v3=Trim(49949,0).TDecimate(mode=0,CycleR=33,Cycle=199,ovr="c:\ovr\ovr-3.txt",display=true,displayOpt=6)
+  # v1++v2++v3
+  v2
+  ```
+  ※最後の"v2"(確認したいTrimの冒頭の文字列)を忘れると、期待する表示になりません。  
+  ※確認後に元に戻すことを忘れないでください。
 
 ---
 ## 6. 最後に(謝辞)
@@ -475,6 +485,9 @@ TIVTCは、AviSynthを使用する方にはおなじみのプラグインだと�
 ---
 
 #### 改訂履歴
+
+* 2023.12.23 v1.1
+  * 「捕捉：`Trim`で分割する場合の注意」加筆(460-472)
 
 * 2023.12.21 v1.0
   * 初版公開
