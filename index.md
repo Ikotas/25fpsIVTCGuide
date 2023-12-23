@@ -178,7 +178,7 @@ TDecimateは、パラメーター`Cycle`に指定したフレーム数の範囲�
   * エンコードアプリケーションと同じ出力結果である必要があります。  
 動画読み込みプラグイン自体、或いは、プラグインのオプションを指定できないアプリケーションでエンコードを行う場合、AvsPmod上では正しく指定できているのに、エンコード後の間引き結果が異なる場合があります。  
 その場合は、エンコードアプリケーションと同じ出力になるように、このプラグインに指定するオプションやプラグイン自体を変更してみる等、試行錯誤してください。  
-(普段、[Amatsukaze](https://github.com/rigaya/Amatsukaze)を使用していますが、AvsPmod側のLSMASHSourceのオプション指定が原因で、どうしても結果が合わずに悩んだ経験があります。)
+(普段 [Amatsukaze](https://github.com/rigaya/Amatsukaze) を使用していますが、AvsPmod側のLSMASHSourceのオプション指定が原因で、どうしても結果が合わずに悩んだ経験があります。)
 * 任意のテキストエディター  
 * 任意のスプレッドシートエディター
 * [25fpsIVTCforTDecimate.xlsx](https://github.com/Ikotas/25fpsIVTCGuide/raw/main/25fpsIVTCforTDecimate.xlsx)
