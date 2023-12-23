@@ -333,7 +333,7 @@ TDecimateの一覧とovrで読み込むファイルの該当箇所を比較し�
             * **<font color="Blue">32437</font>**,33431 +-+\+\+\+\+...  5Cycleに範囲変更
             * 33432,**<font color="Blue">33630</font>** +-+\+\+\+\+\... 1Cycleに切り出したこの行を編集  
 
-        分離を忘れてそのまま編集してしまうと、そのCycleグループの全てのCycleに反映されてしまうため、注意しましょう。
+        分離するのを忘れてそのまま編集してしまうと、そのCycleグループの全てのCycleに反映されてしまうため、注意しましょう。
 
     * **捕捉：ovrファイル内の記述**  
 ※詳細やその他の記述については、[TDecimateのドキュメント](https://raw.githubusercontent.com/pinterf/TIVTC/master/Doc_TIVTC/TDecimate%20-%20READ%20ME.txt)を参照してください。
