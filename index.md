@@ -371,7 +371,8 @@ avsファイルを読み込み可能な任意のエンコードアプリケー�
     * "`display=true`"を指定したままだと、エンコード後の再生画面にも一覧が表示されますので、ご注意ください。
     * "`display=false`"であれば問題ありません。  
 
-<details><summary>おまけ：25.0001255026381fps(4980000/199199) を 25fps(25/1) へ変換する方法</summary>
+<details>
+<summary>おまけ：25.0001255026381fps(4980000/199199) を 25fps(25/1) へ変換する方法</summary>
 
 Amatsukazeやその他のエンコードアプリケーションで動画のみ変換する場合  
 
@@ -387,6 +388,7 @@ mkvmerge.exe -o outputfile --default-duration 0:25/1fps --sync 1:0,25.0001255026
 
 ※要[mkvtoolnix](https://mkvtoolnix.download/)  
 ※普段mkv形式を使用しており、mkv以外については調べていません。  
+
 </details>
 
 ---
