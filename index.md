@@ -1,9 +1,9 @@
-# 29.97fps→25fps逆テレシネ(IVTC)ガイド <sub>v2.0</sub>
+# 29.97fps→25fps逆テレシネ(IVTC)ガイド <span style="font-size:80%;">v2.0</span>
 
-([English and other languages](https://ikotas-github-io.translate.goog/25fpsIVTCGuide/?_x_tr_sl=ja&_x_tr_tl=en&_x_tr_hl=en)) <sub>by Google Translate</sub>
+([English and other languages](https://ikotas-github-io.translate.goog/25fpsIVTCGuide/?_x_tr_sl=ja&_x_tr_tl=en&_x_tr_hl=en)) <span style="font-size:80%;">by Google Translate</span>
 
 ---
-### 目次 <sub>([改訂履歴](#改訂履歴))</sub>
+### 目次 <span style="font-size:80%;">([改訂履歴](#改訂履歴))</span>
 1. [初めに](#1-初めに)  
 2. [25fpsテレシネソースの周期解説](#2-25fpsテレシネソースの周期解説)  
 3. [実施の前に(TDecimateを使用する理由・目的)](#3-実施の前にtdecimateを使用する理由目的)  
@@ -373,20 +373,20 @@ avsファイルを読み込み可能な任意のエンコードアプリケー�
 
 <details><summary>おまけ：25.0001255026381fps(4980000/199199) を 25fps(25/1) へ変換する方法</summary>
 
-Amatsukazeやその他のエンコードアプリケーションで動画のみ変換する場合
+Amatsukazeやその他のエンコードアプリケーションで動画のみ変換する場合  
 
 ```
 mkvmerge.exe -o outputfile --default-duration 0:25/1fps sourcefile
 ```
 
-その他のエンコードアプリケーションで動画と合わせて音声のピッチも変更する場合
+その他のエンコードアプリケーションで動画と合わせて音声のピッチも変更する場合  
 
 ```
 mkvmerge.exe -o outputfile --default-duration 0:25/1fps --sync 1:0,25.0001255026381/25 sourcefile
 ```
 
 ※要[mkvtoolnix](https://mkvtoolnix.download/)  
-※普段mkv形式を使用しており、mkv以外については調べていません。
+※普段mkv形式を使用しており、mkv以外については調べていません。  
 </details>
 
 ---
